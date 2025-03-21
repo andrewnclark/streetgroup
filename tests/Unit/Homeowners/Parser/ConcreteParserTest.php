@@ -3,6 +3,8 @@
 namespace Tests\Unit\Homeowners\Parser;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use App\Homeowners\Parser\ConcreteParser;
 
 class ConcreteParserTest extends TestCase
@@ -15,16 +17,15 @@ class ConcreteParserTest extends TestCase
         $this->parser = new ConcreteParser();
     }
 
-    /**
-     * @dataProvider singleHomeownerProvider
-     */
+    #[Test]
+    #[DataProvider('singleHomeownerProvider')]
     public function testParseSingleHomeowner(string $input, array $expected)
     {
         $result = $this->parser->parse($input);
         $this->assertEquals([$expected], $result);
     }
 
-    public function singleHomeownerProvider(): array
+    public static function singleHomeownerProvider(): array
     {
         return [
             'standard mr' => [
@@ -120,16 +121,15 @@ class ConcreteParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider multipleHomeownersProvider
-     */
+    #[Test]
+    #[DataProvider('multipleHomeownersProvider')]
     public function testParseMultipleHomeowners(string $input, array $expected)
     {
         $result = $this->parser->parse($input);
         $this->assertEquals($expected, $result);
     }
 
-    public function multipleHomeownersProvider(): array
+    public static function multipleHomeownersProvider(): array
     {
         return [
             'and separator' => [

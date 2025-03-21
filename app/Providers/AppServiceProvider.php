@@ -16,11 +16,6 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
-
-        // $this->app->register(Homeowner::class, function (Application $app) {
-        //     $implementation = $app->make(ConcreteParser::class);
-        //     return new Homeowner($implementation);
-        // });
     }
 
     /**
