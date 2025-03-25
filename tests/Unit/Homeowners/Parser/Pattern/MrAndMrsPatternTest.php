@@ -55,13 +55,13 @@ class MrAndMrsPatternTest extends TestCase
                 [
                     [
                         'title' => 'Mr',
-                        'first_name' => 'Smith',
+                        'first_name' => null,
                         'last_name' => 'Smith',
                         'initial' => null
                     ],
                     [
                         'title' => 'Mrs',
-                        'first_name' => 'Smith',
+                        'first_name' => null,
                         'last_name' => 'Smith',
                         'initial' => null
                     ]
@@ -72,13 +72,13 @@ class MrAndMrsPatternTest extends TestCase
                 [
                     [
                         'title' => 'Dr',
-                        'first_name' => 'Jones',
+                        'first_name' => null,
                         'last_name' => 'Jones',
                         'initial' => null
                     ],
                     [
                         'title' => 'Mrs',
-                        'first_name' => 'Jones',
+                        'first_name' => null,
                         'last_name' => 'Jones',
                         'initial' => null
                     ]
@@ -89,13 +89,13 @@ class MrAndMrsPatternTest extends TestCase
                 [
                     [
                         'title' => 'Mr',
-                        'first_name' => 'Smith',
+                        'first_name' => null,
                         'last_name' => 'Smith',
                         'initial' => null
                     ],
                     [
                         'title' => 'Mrs',
-                        'first_name' => 'Smith',
+                        'first_name' => null,
                         'last_name' => 'Smith',
                         'initial' => null
                     ]

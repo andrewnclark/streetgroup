@@ -188,13 +188,13 @@ class ArrayParserTest extends TestCase
                 [
                     [
                         'title' => 'Mr',
-                        'first_name' => 'Smith',
+                        'first_name' => null,
                         'last_name' => 'Smith',
                         'initial' => null
                     ],
                     [
                         'title' => 'Mrs',
-                        'first_name' => 'Smith',
+                        'first_name' => null,
                         'last_name' => 'Smith',
                         'initial' => null
                     ]
@@ -205,13 +205,13 @@ class ArrayParserTest extends TestCase
                 [
                     [
                         'title' => 'Dr',
-                        'first_name' => 'Jones',
+                        'first_name' => null,
                         'last_name' => 'Jones',
                         'initial' => null
                     ],
                     [
                         'title' => 'Mrs',
-                        'first_name' => 'Jones',
+                        'first_name' => null,
                         'last_name' => 'Jones',
                         'initial' => null
                     ]

@@ -16,7 +16,7 @@ trait ParserHelpers
         'professor' => 'Prof'
     ];
 
-    protected function createHomeownerArray(string $title, string $firstName, string $lastName, ?string $initial = null): array
+    protected function createHomeownerArray(string $title, ?string $firstName, string $lastName, ?string $initial = null): array
     {
         return [
             'title' => $title,

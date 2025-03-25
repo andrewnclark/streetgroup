@@ -19,8 +19,8 @@ class MrAndMrsPattern implements PatternInterface
         if (preg_match('/^(Mr|Mrs|Dr|Ms|Prof)\s+and\s+(Mr|Mrs|Dr|Ms|Prof)\s+([A-Za-z-]+)$/i', $input, $matches)) {
             $lastName = $matches[3];
             return [
-                $this->createHomeownerArray($this->normalizeTitle($matches[1]), $lastName, $lastName),
-                $this->createHomeownerArray($this->normalizeTitle($matches[2]), $lastName, $lastName)
+                $this->createHomeownerArray($this->normalizeTitle($matches[1]), null, $lastName),
+                $this->createHomeownerArray($this->normalizeTitle($matches[2]), null, $lastName)
             ];
         }
         
