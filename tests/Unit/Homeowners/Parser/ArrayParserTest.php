@@ -5,16 +5,16 @@ namespace Tests\Unit\Homeowners\Parser;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use App\Homeowners\Parser\ConcreteParser;
+use App\Homeowners\Parser\ArrayParser;
 
-class ConcreteParserTest extends TestCase
+class ArrayParserTest extends TestCase
 {
-    private ConcreteParser $parser;
+    private ArrayParser $parser;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->parser = new ConcreteParser();
+        $this->parser = new ArrayParser();
     }
 
     #[Test]

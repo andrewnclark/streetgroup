@@ -20,7 +20,11 @@ class SingleHomeownerPattern implements PatternInterface
     {
         $parts = array_values(array_filter(explode(' ', trim($input))));
         
-        // We no longer need to check for empty input since EmptyValuePattern will handle it
+        // Check if we have enough parts to form a valid homeowner
+        if (count($parts) < 2) {
+            return null;
+        }
+        
         $title = $this->normalizeTitle($parts[0]);
         $firstName = $parts[1];
         $lastName = end($parts);

@@ -11,7 +11,7 @@ use App\Homeowners\Parser\Pattern\SingleHomeownerPattern;
 use App\Homeowners\Parser\Pattern\NullValuePattern;
 use App\Homeowners\Parser\Pattern\EmptyValuePattern;
 
-class ConcreteParser implements ParserInterface
+class ArrayParser implements ParserInterface
 {
     /**
      * @var PatternInterface[]
