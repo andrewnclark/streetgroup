@@ -13,10 +13,19 @@ class Homeowner
         $this->parser = $parser;
     }
 
-    function parseHomeownerString(string $string)
+    /**
+     * Parse a homeowner string into an array of homeowner arrays
+     * 
+     * @param string $string The input string to parse
+     * @return array An array of homeowner arrays, each with title, first_name, last_name, and initial keys
+     */
+    function parseHomeownerString(string $string): array
     {
-        $return = $this->parser->parse($string);
-
-        return $return;
+        $persons = $this->parser->parse($string);
+        
+        // Convert Person objects to arrays
+        return array_map(function($person) {
+            return $person->toArray();
+        }, $persons);
     }
 }
