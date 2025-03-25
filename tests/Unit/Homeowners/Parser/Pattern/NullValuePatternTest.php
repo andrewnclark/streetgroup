@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use App\Homeowners\Parser\Pattern\NullValuePattern;
+use App\Homeowners\Parser\Exceptions\StringCouldNotBeParsedException;
 use App\Homeowners\Person;
 
 class NullValuePatternTest extends TestCase
@@ -40,19 +41,19 @@ class NullValuePatternTest extends TestCase
 
     #[Test]
     #[DataProvider('handleProvider')]
-    public function testHandle(string $input, array $expected)
+    public function testHandle(string $input)
     {
-        $result = $this->pattern->handle($input);
-        $this->assertIsArray($result);
-        $this->assertEmpty($result);
-        $this->assertEquals($expected, $result);
+        $this->expectException(StringCouldNotBeParsedException::class);
+        $this->expectExceptionMessage("Cannot parse null value");
+        
+        $this->pattern->handle($input);
     }
 
     public static function handleProvider(): array
     {
         return [
-            'null value' => ['null', []],
-            'NULL value' => ['NULL', []],
+            'null value' => ['null'],
+            'NULL value' => ['NULL'],
         ];
     }
 }

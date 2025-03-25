@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use App\Homeowners\Parser\ArrayParser;
+use App\Homeowners\Parser\Exceptions\StringCouldNotBeParsedException;
 use App\Homeowners\Person;
 
 class ArrayParserTest extends TestCase
@@ -242,6 +243,25 @@ class ArrayParserTest extends TestCase
                     ]
                 ]
             ]
+        ];
+    }
+    
+    #[Test]
+    #[DataProvider('unparsableInputProvider')]
+    public function testUnparsableInput(string $input, string $expectedExceptionMessage)
+    {
+        $this->expectException(StringCouldNotBeParsedException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        
+        $this->parser->parse($input);
+    }
+    
+    public static function unparsableInputProvider(): array
+    {
+        return [
+            'empty string' => ['', "Cannot parse empty value"],
+            'null string' => ['null', "Cannot parse null value"],
+            'invalid format' => ['InvalidFormat', "No pattern found to parse: 'InvalidFormat'"],
         ];
     }
 }

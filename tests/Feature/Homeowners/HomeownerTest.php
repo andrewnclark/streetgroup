@@ -5,6 +5,7 @@ namespace Tests\Feature\Homeowners;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Homeowners\Homeowner;
+use App\Homeowners\Parser\Exceptions\StringCouldNotBeParsedException;
 use App\Homeowners\Person;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -147,34 +148,27 @@ class HomeownerTest extends TestCase
     }
 
     /**
-     * Test that the Homeowner service properly handles empty input
+     * Test that the Homeowner service properly handles exceptions for unparsable inputs
      */
     #[Test]
-    public function testEmptyInput()
+    #[DataProvider('unparsableInputProvider')]
+    public function testUnparsableInput(string $input, string $expectedExceptionMessage)
     {
         // Resolve the Homeowner service from the container
         $homeowner = $this->app->make(Homeowner::class);
         
-        $result = $homeowner->parseHomeownerString('');
+        $this->expectException(StringCouldNotBeParsedException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
         
-        // Verify that the result is an empty array
-        $this->assertIsArray($result);
-        $this->assertEmpty($result);
+        $homeowner->parseHomeownerString($input);
     }
-
-    /**
-     * Test that the Homeowner service properly handles null input
-     */
-    #[Test]
-    public function testNullInput()
+    
+    public static function unparsableInputProvider(): array
     {
-        // Resolve the Homeowner service from the container
-        $homeowner = $this->app->make(Homeowner::class);
-        
-        $result = $homeowner->parseHomeownerString('null');
-        
-        // Verify that the result is an empty array
-        $this->assertIsArray($result);
-        $this->assertEmpty($result);
+        return [
+            'empty string' => ['', "Cannot parse empty value"],
+            'null string' => ['null', "Cannot parse null value"],
+            'invalid format' => ['InvalidFormat', "No pattern found to parse: 'InvalidFormat'"],
+        ];
     }
 }

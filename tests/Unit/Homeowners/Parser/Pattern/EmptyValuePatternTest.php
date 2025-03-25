@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use App\Homeowners\Parser\Pattern\EmptyValuePattern;
+use App\Homeowners\Parser\Exceptions\StringCouldNotBeParsedException;
 use App\Homeowners\Person;
 
 class EmptyValuePatternTest extends TestCase
@@ -39,20 +40,20 @@ class EmptyValuePatternTest extends TestCase
 
     #[Test]
     #[DataProvider('handleProvider')]
-    public function testHandle(string $input, array $expected)
+    public function testHandle(string $input)
     {
-        $result = $this->pattern->handle($input);
-        $this->assertIsArray($result);
-        $this->assertEmpty($result);
-        $this->assertEquals($expected, $result);
+        $this->expectException(StringCouldNotBeParsedException::class);
+        $this->expectExceptionMessage("Cannot parse empty value");
+        
+        $this->pattern->handle($input);
     }
 
     public static function handleProvider(): array
     {
         return [
-            'empty string' => ['', []],
-            'whitespace only' => [' ', []],
-            'tabs and newlines' => ["\t\n", []],
+            'empty string' => [''],
+            'whitespace only' => [' '],
+            'tabs and newlines' => ["\t\n"],
         ];
     }
 }

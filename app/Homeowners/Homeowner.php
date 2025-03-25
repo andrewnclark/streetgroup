@@ -3,6 +3,7 @@
 namespace App\Homeowners;
 
 use App\Homeowners\Parser\Contract\ParserInterface;
+use App\Homeowners\Parser\Exceptions\StringCouldNotBeParsedException;
 
 class Homeowner
 {
@@ -18,6 +19,7 @@ class Homeowner
      * 
      * @param string $string The input string to parse
      * @return array An array of homeowner arrays, each with title, first_name, last_name, and initial keys
+     * @throws StringCouldNotBeParsedException If the string cannot be parsed
      */
     function parseHomeownerString(string $string): array
     {

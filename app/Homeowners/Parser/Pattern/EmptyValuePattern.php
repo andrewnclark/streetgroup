@@ -3,6 +3,7 @@
 namespace App\Homeowners\Parser\Pattern;
 
 use App\Homeowners\Parser\Contract\PatternInterface;
+use App\Homeowners\Parser\Exceptions\StringCouldNotBeParsedException;
 use App\Homeowners\Person;
 
 class EmptyValuePattern implements PatternInterface
@@ -12,8 +13,11 @@ class EmptyValuePattern implements PatternInterface
         return trim($input) === '';
     }
     
+    /**
+     * @throws StringCouldNotBeParsedException
+     */
     public function handle(string $input): ?array
     {
-        return [];
+        throw new StringCouldNotBeParsedException("Cannot parse empty value");
     }
 }

@@ -10,6 +10,7 @@ use App\Homeowners\Parser\Pattern\AmpersandSeparatedPattern;
 use App\Homeowners\Parser\Pattern\SingleHomeownerPattern;
 use App\Homeowners\Parser\Pattern\NullValuePattern;
 use App\Homeowners\Parser\Pattern\EmptyValuePattern;
+use App\Homeowners\Parser\Exceptions\StringCouldNotBeParsedException;
 use App\Homeowners\Person;
 
 class ArrayParser implements ParserInterface
@@ -37,6 +38,7 @@ class ArrayParser implements ParserInterface
      * 
      * @param string $string The input string to parse
      * @return Person[] An array of Person objects
+     * @throws StringCouldNotBeParsedException If the string cannot be parsed
      */
     public function parse(string $string): array
     {
@@ -47,7 +49,7 @@ class ArrayParser implements ParserInterface
         });
 
         if ($parser === null) {
-            return [];
+            throw new StringCouldNotBeParsedException("No pattern found to parse: '$string'");
         }
 
         $result = $parser->handle($string);
@@ -55,6 +57,6 @@ class ArrayParser implements ParserInterface
             return $result;
         }
 
-        return [];
+        throw new StringCouldNotBeParsedException("Failed to parse: '$string'");
     }
 }

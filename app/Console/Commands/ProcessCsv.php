@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use League\Csv\Reader;
 use App\Homeowners\Homeowner;
+use App\Homeowners\Parser\Exceptions\StringCouldNotBeParsedException;
 use Illuminate\Support\Facades\Storage;
 
 class ProcessCsv extends Command
@@ -32,16 +33,23 @@ class ProcessCsv extends Command
             $reader = Reader::createFromPath(storage_path('app/public/streetgroup.csv'), 'r');
             $reader->setHeaderOffset(0);
 
-            $records = $reader->getRecords();
+            $progress = $this->output->createProgressBar(count($reader));
 
-            foreach($records as $record) {
-                $output = $homeowner->parseHomeownerString($record['homeowner']);
-                var_dump($output);
-            }
+            foreach($reader->getRecords() as $record) {
+                try {
+                    $output = $homeowner->parseHomeownerString($record['homeowner']);
+                    var_dump($output);
+                } catch (StringCouldNotBeParsedException $e) {
+                    $this->error("Error parsing homeowner: " . $record['homeowner']);
+                    $this->line("  " . $e->getMessage());
+                }
+                $progress->advance();
+            };
 
             return 0;
         }
         
-        $this->info("Unfortunately, the streetgroup.csv cannot be located in the public storage directory");
+        $this->error("Unfortunately, the streetgroup.csv cannot be located in the public storage directory");
+        return 1;
     }
 }
