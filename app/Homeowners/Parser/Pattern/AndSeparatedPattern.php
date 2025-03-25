@@ -17,9 +17,6 @@ class AndSeparatedPattern implements PatternInterface
     public function handle(string $input): ?array
     {
         $parts = explode(' and ', $input);
-        if (count($parts) !== 2) {
-            return null;
-        }
         
         $firstPart = trim($parts[0]);
         $secondPart = trim($parts[1]);

@@ -8,6 +8,8 @@ use App\Homeowners\Parser\Pattern\MrAndMrsPattern;
 use App\Homeowners\Parser\Pattern\AndSeparatedPattern;
 use App\Homeowners\Parser\Pattern\AmpersandSeparatedPattern;
 use App\Homeowners\Parser\Pattern\SingleHomeownerPattern;
+use App\Homeowners\Parser\Pattern\NullValuePattern;
+use App\Homeowners\Parser\Pattern\EmptyValuePattern;
 
 class ConcreteParser implements ParserInterface
 {
@@ -20,6 +22,8 @@ class ConcreteParser implements ParserInterface
     {
         // Order matters - more specific patterns should be checked first
         $this->patterns = [
+            new EmptyValuePattern(),
+            new NullValuePattern(),
             new MrAndMrsPattern(),
             new AndSeparatedPattern(),
             new AmpersandSeparatedPattern(),
@@ -34,6 +38,10 @@ class ConcreteParser implements ParserInterface
         $parser = collect($this->patterns)->first(function ($pattern) use ($string) {
             return $pattern->match($string);
         });
+
+        if ($parser === null) {
+            return [];
+        }
 
         $result = $parser->handle($string);
         if ($result !== null) {

@@ -19,10 +19,8 @@ class SingleHomeownerPattern implements PatternInterface
     public function handle(string $input): ?array
     {
         $parts = array_values(array_filter(explode(' ', trim($input))));
-        if (count($parts) < 2) {
-            return null;
-        }
         
+        // We no longer need to check for empty input since EmptyValuePattern will handle it
         $title = $this->normalizeTitle($parts[0]);
         $firstName = $parts[1];
         $lastName = end($parts);
