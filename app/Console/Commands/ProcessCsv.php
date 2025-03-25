@@ -34,22 +34,30 @@ class ProcessCsv extends Command
             $reader->setHeaderOffset(0);
 
             $progress = $this->output->createProgressBar(count($reader));
+            $successCount = 0;
+            $errorCount = 0;
 
             foreach($reader->getRecords() as $record) {
                 try {
                     $output = $homeowner->parseHomeownerString($record['homeowner']);
                     var_dump($output);
+                    $successCount++;
                 } catch (StringCouldNotBeParsedException $e) {
                     $this->error("Error parsing homeowner: " . $record['homeowner']);
                     $this->line("  " . $e->getMessage());
+                    $errorCount++;
                 }
                 $progress->advance();
-            };
+            }
+            
+            $progress->finish();
+            $this->newLine(2);
+            $this->info("Processing complete: $successCount successful, $errorCount failed");
 
             return 0;
         }
         
         $this->error("Unfortunately, the streetgroup.csv cannot be located in the public storage directory");
-        return 1;
+        $this->fail();
     }
 }
