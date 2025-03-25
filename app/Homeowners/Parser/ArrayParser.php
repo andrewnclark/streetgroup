@@ -52,11 +52,6 @@ class ArrayParser implements ParserInterface
             throw new StringCouldNotBeParsedException("No pattern found to parse: '$string'");
         }
 
-        $result = $parser->handle($string);
-        if ($result !== null) {
-            return $result;
-        }
-
-        throw new StringCouldNotBeParsedException("Failed to parse: '$string'");
+        return $parser->handle($string);
     }
 }
