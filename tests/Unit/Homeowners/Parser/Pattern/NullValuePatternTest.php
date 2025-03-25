@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use App\Homeowners\Parser\Pattern\NullValuePattern;
+use App\Homeowners\Person;
 
 class NullValuePatternTest extends TestCase
 {
@@ -42,6 +43,8 @@ class NullValuePatternTest extends TestCase
     public function testHandle(string $input, array $expected)
     {
         $result = $this->pattern->handle($input);
+        $this->assertIsArray($result);
+        $this->assertEmpty($result);
         $this->assertEquals($expected, $result);
     }
 

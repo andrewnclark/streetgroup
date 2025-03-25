@@ -2,6 +2,8 @@
 
 namespace App\Homeowners\Parser;
 
+use App\Homeowners\Person;
+
 trait ParserHelpers
 {
     private array $titleMap = [
@@ -16,6 +18,22 @@ trait ParserHelpers
         'professor' => 'Prof'
     ];
 
+    /**
+     * Create a Person object with the given homeowner details
+     */
+    protected function createPerson(string $title, ?string $firstName, string $lastName, ?string $initial = null): Person
+    {
+        return new Person(
+            $title,
+            $firstName,
+            $lastName,
+            $initial
+        );
+    }
+
+    /**
+     * @deprecated Use createPerson() instead
+     */
     protected function createHomeownerArray(string $title, ?string $firstName, string $lastName, ?string $initial = null): array
     {
         return [

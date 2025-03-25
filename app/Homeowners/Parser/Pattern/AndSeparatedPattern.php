@@ -4,6 +4,7 @@ namespace App\Homeowners\Parser\Pattern;
 
 use App\Homeowners\Parser\Contract\PatternInterface;
 use App\Homeowners\Parser\ParserHelpers;
+use App\Homeowners\Person;
 
 class AndSeparatedPattern implements PatternInterface
 {
@@ -41,7 +42,7 @@ class AndSeparatedPattern implements PatternInterface
         return null;
     }
     
-    private function parseSimpleHomeowner(string $input): ?array
+    private function parseSimpleHomeowner(string $input): ?Person
     {
         $parts = array_values(array_filter(explode(' ', trim($input))));
         if (count($parts) < 2) {
@@ -64,6 +65,6 @@ class AndSeparatedPattern implements PatternInterface
             $lastName = $parts[3] ?? $lastName;
         }
         
-        return $this->createHomeownerArray($title, $firstName, $lastName, $initial);
+        return $this->createPerson($title, $firstName, $lastName, $initial);
     }
 }

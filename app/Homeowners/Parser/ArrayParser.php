@@ -10,6 +10,7 @@ use App\Homeowners\Parser\Pattern\AmpersandSeparatedPattern;
 use App\Homeowners\Parser\Pattern\SingleHomeownerPattern;
 use App\Homeowners\Parser\Pattern\NullValuePattern;
 use App\Homeowners\Parser\Pattern\EmptyValuePattern;
+use App\Homeowners\Person;
 
 class ArrayParser implements ParserInterface
 {
@@ -31,6 +32,12 @@ class ArrayParser implements ParserInterface
         ];
     }
 
+    /**
+     * Parse a string into an array of Person objects
+     * 
+     * @param string $string The input string to parse
+     * @return Person[] An array of Person objects
+     */
     public function parse(string $string): array
     {
         $string = trim($string);

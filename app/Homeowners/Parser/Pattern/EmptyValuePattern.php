@@ -3,6 +3,7 @@
 namespace App\Homeowners\Parser\Pattern;
 
 use App\Homeowners\Parser\Contract\PatternInterface;
+use App\Homeowners\Person;
 
 class EmptyValuePattern implements PatternInterface
 {

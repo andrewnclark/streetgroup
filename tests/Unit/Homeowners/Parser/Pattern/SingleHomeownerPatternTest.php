@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use App\Homeowners\Parser\Pattern\SingleHomeownerPattern;
+use App\Homeowners\Person;
 
 class SingleHomeownerPatternTest extends TestCase
 {
@@ -45,7 +46,18 @@ class SingleHomeownerPatternTest extends TestCase
     public function testHandle(string $input, ?array $expected)
     {
         $result = $this->pattern->handle($input);
-        $this->assertEquals($expected, $result);
+        
+        if ($expected === null) {
+            $this->assertNull($result);
+            return;
+        }
+        
+        $this->assertIsArray($result);
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(Person::class, $result[0]);
+        
+        $personArray = $result[0]->toArray();
+        $this->assertEquals($expected[0], $personArray);
     }
 
     public static function handleProvider(): array

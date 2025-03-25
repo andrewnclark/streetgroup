@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use App\Homeowners\Parser\Pattern\EmptyValuePattern;
+use App\Homeowners\Person;
 
 class EmptyValuePatternTest extends TestCase
 {
@@ -41,6 +42,8 @@ class EmptyValuePatternTest extends TestCase
     public function testHandle(string $input, array $expected)
     {
         $result = $this->pattern->handle($input);
+        $this->assertIsArray($result);
+        $this->assertEmpty($result);
         $this->assertEquals($expected, $result);
     }
 
@@ -49,6 +52,7 @@ class EmptyValuePatternTest extends TestCase
         return [
             'empty string' => ['', []],
             'whitespace only' => [' ', []],
+            'tabs and newlines' => ["\t\n", []],
         ];
     }
 }

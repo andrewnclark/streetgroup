@@ -4,6 +4,7 @@ namespace App\Homeowners\Parser\Pattern;
 
 use App\Homeowners\Parser\Contract\PatternInterface;
 use App\Homeowners\Parser\ParserHelpers;
+use App\Homeowners\Person;
 
 class AmpersandSeparatedPattern implements PatternInterface
 {
@@ -56,17 +57,17 @@ class AmpersandSeparatedPattern implements PatternInterface
         }
         
         $normalizedTitle = $this->normalizeTitle($title);
-        $firstHomeowner = $this->createHomeownerArray(
+        $firstHomeowner = $this->createPerson(
             $normalizedTitle,
-            $secondHomeowner['first_name'],
-            $secondHomeowner['last_name'],
-            $secondHomeowner['initial']
+            $secondHomeowner->getFirstName(),
+            $secondHomeowner->getLastName(),
+            $secondHomeowner->getInitial()
         );
         
         return [$firstHomeowner, $secondHomeowner];
     }
     
-    private function parseSimpleHomeowner(string $input): ?array
+    private function parseSimpleHomeowner(string $input): ?Person
     {
         $parts = array_values(array_filter(explode(' ', trim($input))));
         if (count($parts) < 2) {
@@ -89,6 +90,6 @@ class AmpersandSeparatedPattern implements PatternInterface
             $lastName = $parts[3] ?? $lastName;
         }
         
-        return $this->createHomeownerArray($title, $firstName, $lastName, $initial);
+        return $this->createPerson($title, $firstName, $lastName, $initial);
     }
 }

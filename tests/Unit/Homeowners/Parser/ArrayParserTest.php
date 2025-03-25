@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use App\Homeowners\Parser\ArrayParser;
+use App\Homeowners\Person;
 
 class ArrayParserTest extends TestCase
 {
@@ -21,8 +22,20 @@ class ArrayParserTest extends TestCase
     #[DataProvider('singleHomeownerProvider')]
     public function testParseSingleHomeowner(string $input, array $expected)
     {
+        // Parse the input string using the ArrayParser
         $result = $this->parser->parse($input);
-        $this->assertEquals([$expected], $result);
+        
+        // Verify that the result is an array
+        $this->assertIsArray($result);
+        
+        // Verify that the array contains exactly one item
+        $this->assertCount(1, $result);
+        
+        // Verify that the array contains a Person object
+        $this->assertInstanceOf(Person::class, $result[0]);
+        
+        // Verify the Person object has the expected values
+        $this->assertEquals($expected, $result[0]->toArray());
     }
 
     public static function singleHomeownerProvider(): array
@@ -125,8 +138,20 @@ class ArrayParserTest extends TestCase
     #[DataProvider('multipleHomeownersProvider')]
     public function testParseMultipleHomeowners(string $input, array $expected)
     {
+        // Parse the input string using the ArrayParser
         $result = $this->parser->parse($input);
-        $this->assertEquals($expected, $result);
+        
+        // Verify that the result is an array
+        $this->assertIsArray($result);
+        
+        // Verify that the array contains the expected number of items
+        $this->assertCount(count($expected), $result);
+        
+        // Verify that each item in the array is a Person object with the expected values
+        foreach ($result as $index => $person) {
+            $this->assertInstanceOf(Person::class, $person);
+            $this->assertEquals($expected[$index], $person->toArray());
+        }
     }
 
     public static function multipleHomeownersProvider(): array

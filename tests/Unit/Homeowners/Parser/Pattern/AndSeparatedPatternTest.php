@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use App\Homeowners\Parser\Pattern\AndSeparatedPattern;
+use App\Homeowners\Person;
 
 class AndSeparatedPatternTest extends TestCase
 {
@@ -42,7 +43,19 @@ class AndSeparatedPatternTest extends TestCase
     public function testHandle(string $input, ?array $expected)
     {
         $result = $this->pattern->handle($input);
-        $this->assertEquals($expected, $result);
+        
+        if ($expected === null) {
+            $this->assertNull($result);
+            return;
+        }
+        
+        $this->assertIsArray($result);
+        $this->assertCount(count($expected), $result);
+        
+        foreach ($result as $index => $person) {
+            $this->assertInstanceOf(Person::class, $person);
+            $this->assertEquals($expected[$index], $person->toArray());
+        }
     }
 
     public static function handleProvider(): array

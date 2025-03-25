@@ -4,6 +4,7 @@ namespace App\Homeowners\Parser\Pattern;
 
 use App\Homeowners\Parser\Contract\PatternInterface;
 use App\Homeowners\Parser\ParserHelpers;
+use App\Homeowners\Person;
 
 class SingleHomeownerPattern implements PatternInterface
 {
@@ -41,6 +42,6 @@ class SingleHomeownerPattern implements PatternInterface
             $lastName = $parts[3] ?? $lastName;
         }
         
-        return [$this->createHomeownerArray($title, $firstName, $lastName, $initial)];
+        return [$this->createPerson($title, $firstName, $lastName, $initial)];
     }
 }
