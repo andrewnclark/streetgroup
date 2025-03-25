@@ -21,7 +21,7 @@ class Homeowner
      * @return array An array of homeowner arrays, each with title, first_name, last_name, and initial keys
      * @throws StringCouldNotBeParsedException If the string cannot be parsed
      */
-    function parseHomeownerString(string $string): array
+    function parseHomeownerStringToArray(string $string): array
     {
         $persons = $this->parser->parse($string);
         

@@ -39,8 +39,7 @@ class ProcessCsv extends Command
 
             foreach($reader->getRecords() as $record) {
                 try {
-                    $output = $homeowner->parseHomeownerString($record['homeowner']);
-                    var_dump($output);
+                    $output = $homeowner->parseHomeownerStringToArray($record['homeowner']);
                     $successCount++;
                 } catch (StringCouldNotBeParsedException $e) {
                     $this->error("Error parsing homeowner: " . $record['homeowner']);

@@ -22,7 +22,7 @@ class HomeownerTest extends TestCase
         // Resolve the Homeowner service from the container
         $homeowner = $this->app->make(Homeowner::class);
         
-        $result = $homeowner->parseHomeownerString($input);
+        $result = $homeowner->parseHomeownerStringToArray($input);
         
         // Verify that the result is an array
         $this->assertIsArray($result);
@@ -76,7 +76,7 @@ class HomeownerTest extends TestCase
         // Resolve the Homeowner service from the container
         $homeowner = $this->app->make(Homeowner::class);
         
-        $result = $homeowner->parseHomeownerString($input);
+        $result = $homeowner->parseHomeownerStringToArray($input);
         
         // Verify that the result is an array with the expected number of items
         $this->assertIsArray($result);
@@ -160,7 +160,7 @@ class HomeownerTest extends TestCase
         $this->expectException(StringCouldNotBeParsedException::class);
         $this->expectExceptionMessage($expectedExceptionMessage);
         
-        $homeowner->parseHomeownerString($input);
+        $homeowner->parseHomeownerStringToArray($input);
     }
     
     public static function unparsableInputProvider(): array
