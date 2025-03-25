@@ -18,8 +18,18 @@ class AmpersandSeparatedPattern implements PatternInterface
     {
         $parts = explode(' & ', $input);
         
-        $firstPart = trim($parts[0]);
-        $secondPart = trim($parts[1]);
+        // Check if we have the required parts
+        if (count($parts) < 2) {
+            return null;
+        }
+        
+        $firstPart = trim($parts[0] ?? '');
+        $secondPart = trim($parts[1] ?? '');
+        
+        // Check if either part is empty after trimming
+        if ($firstPart === '' || $secondPart === '') {
+            return null;
+        }
         
         // Check if first part is just a title
         $firstPartWords = array_filter(explode(' ', $firstPart));
